@@ -22,99 +22,53 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/Bus_Train_Text"
-        app:layout_constraintBottom_toTopOf="@+id/Route_TextView"
+        android:text="@string/Bus_Train_Switch"
+        app:layout_constraintBottom_toTopOf="@+id/Bus_Route_Spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.103" />
-
-    <TextView
-        android:id="@+id/Route_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="92dp"
-        android:textAllCaps="false"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/Select_Route_Text" />
-
-    <Spinner
-        android:id="@+id/Route_Spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="92dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
-        app:layout_constraintStart_toEndOf="@+id/Route_TextView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/Direction_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:textAllCaps="false"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/Direction_Spinner"
-        app:layout_constraintHorizontal_bias="0.0"
+    <Spinner
+        android:id="@+id/Bus_Route_Spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="88dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Route_TextView"
-        tools:text="@string/Select_Direction_Text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/Direction_Spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:id="@+id/Bus_Direction_Spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Route_Spinner" />
-
-    <TextView
-        android:id="@+id/Stop_TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:textAllCaps="false"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/Stop_Spinner"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Direction_TextView"
-        tools:text="@string/Select_Stop_Text" />
+        app:layout_constraintTop_toBottomOf="@+id/Bus_Route_Spinner" />
 
     <Spinner
-        android:id="@+id/Stop_Spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:id="@+id/Bus_Stop_Spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="108dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Direction_Spinner" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Bus_Direction_Spinner" />
 
     <Button
-        android:id="@+id/Track_Train_Button"
+        android:id="@+id/Track_Bus_Button"
         android:layout_width="294dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -123,14 +77,13 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@color/colorPrimaryDark"
         android:text="@string/Track_Text"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Stop_TextView"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintVertical_bias="0.613" />
+        app:layout_constraintTop_toBottomOf="@+id/Bus_Stop_Spinner" />
 
 
 </android.support.constraint.ConstraintLayout>
