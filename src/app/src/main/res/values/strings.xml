@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyTransitApp-Android</string>
+
+    <string name="Bus_Train_Text">Train</string>
+    <string name="Select_Route_Text">Select Route</string>
+    <string name="Select_Direction_Text">Select Direction</string>
+    <string name="Select_Stop_Text">Select Stop</string>
+    <string name="Track_Text">TRACK</string>
+
+</resources>
