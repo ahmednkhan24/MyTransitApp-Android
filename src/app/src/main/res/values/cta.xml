@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Bus Route-->
+    <string-array name="Bus_Routes_Array">
+        <item>Select Route</item>
+        <item>7 - Harrison</item>
+        <item>8 - Halsted</item>
+        <item>12 - Roosevelt</item>
+        <item>60 - Blue Island/26th</item>
+        <item>157 - Streeterville/Taylor</item>
+    </string-array>
+
+
+
+    <!--Bus Direction-->
+    <string-array name="Empty_Direction">
+        <item>Select Direction</item>
+    </string-array>
+
+    <string-array name="NorthSouth_Direction">
+        <item>Select Direction</item>
+        <item>North</item>
+        <item>South</item>
+    </string-array>
+
+    <string-array name="EastWest_Direction">
+        <item>Select Direction</item>
+        <item>East</item>
+        <item>West</item>
+    </string-array>
+
+
+
+    <!--Bus Stops-->
+    <string-array name="Empty_Stop">
+        <item>Select Stop</item>
+    </string-array>
+
+    <string-array name="Eight_North_Stops">
+        <item>Select Stop</item>
+        <item id="440">Halsted &amp; Madison</item>
+        <item id="5931">Halsted &amp; Monroe</item>
+        <item id="18009">Halsted &amp; Jackson</item>
+        <item id="18184">UIC-Halsted Blue Line Station</item>
+        <item id="4618">Halsted &amp; Polk</item>
+        <item id="14487">Halsted &amp; Taylor</item>
+        <item id="14777">Halsted &amp; Roosevelt</item>
+        <item id="5928">Halsted &amp; Maxwell</item>
+        <item id="5926">Halsted &amp; 14th Place</item>
+    </string-array>
+
+    <string-array name="Eight_North_IDs">
+        <item>Select Stop</item>
+        <item>440</item>
+        <item>5931</item>
+        <item>18009</item>
+        <item>18184</item>
+        <item>4618</item>
+        <item>14487</item>
+        <item>14777</item>
+        <item>5928</item>
+        <item>5926</item>
+    </string-array>
+
+    <string-array name="Eight_South_Stops">
+        <item>Select Stop</item>
+        <item>Halsted &amp; Madison</item>
+        <item>Halsted &amp; Monroe</item>
+        <item>Halsted &amp; Jackson</item>
+        <item>UIC-Halsted Blue Line Station</item>
+        <item>Halsted &amp; Harrison</item>
+        <item>Halsted &amp; Polk</item>
+        <item>Halsted &amp; Taylor</item>
+        <item>Halsted &amp; Roosevelt</item>
+        <item>Halsted &amp; Maxwell</item>
+        <item>Halsted &amp; 14th Place</item>
+    </string-array>
+
+    <string-array name="Eight_South_IDs">
+        <item>Select Stop</item>
+        <item>15008</item>
+        <item>15352</item>
+        <item>5799</item>
+        <item>205</item>
+        <item>4638</item>
+        <item>4639</item>
+        <item>4640</item>
+        <item>17366</item>
+        <item>5802</item>
+        <item>5804</item>
+    </string-array>
+
+    <string-array name="Seven_West_Stops">
+        <item>Select Stop</item>
+        <item>Clinton &amp; Harrison</item>
+        <item>Harrison &amp; Jefferson</item>
+        <item>Harrison &amp; Halsted</item>
+        <item>900 W Harrison</item>
+        <item>Harrison &amp; Morgan</item>
+        <item>Harrison &amp; Racine (SSB)</item>
+        <item>Harrison &amp; Throop</item>
+        <item>Harrison &amp; Loomis</item>
+    </string-array>
+
+    <string-array name="Seven_West_IDs">
+        <item>Select Stop</item>
+        <item>6364</item>
+        <item>6365</item>
+        <item>206</item>
+        <item>207</item>
+        <item>208</item>
+        <item>210</item>
+        <item>18340</item>
+        <item>18335</item>
+    </string-array>
+
+    <string-array name="Seven_East_Stops">
+        <item>Select Stop</item>
+        <item>Canal &amp; Harrison</item>
+        <item>Harrison &amp; Jefferson</item>
+        <item>Harrison &amp; Halsted</item>
+        <item>900 W Harrison</item>
+        <item>Harrison &amp; Morgan</item>
+        <item>Harrison &amp; Racine</item>
+        <item>Harrison &amp; Throop</item>
+        <item>Harrison &amp; Loomis</item>
+    </string-array>
+
+    <string-array name="Seven_East_IDs">
+        <item>Select Stop</item>
+        <item>14210</item>
+        <item>17995</item>
+        <item>6347</item>
+        <item>201</item>
+        <item>200</item>
+        <item>198</item>
+        <item>18339</item>
+        <item>18336</item>
+    </string-array>
+
+    <string-array name="Sixty_West_Stops">
+        <item>Select Stop</item>
+        <item>Clinton &amp; Harrison</item>
+        <item>Harrison &amp; Jefferson</item>
+        <item>Harrison &amp; Halsted</item>
+        <item>900 W Harrison</item>
+        <item>Harrison &amp; Morgan</item>
+        <item>Racine &amp; Harrison</item>
+        <item>Racine &amp; Lexington</item>
+        <item>Racine &amp; Cabrini</item>
+        <item>Racine &amp; Taylor</item>
+        <item>Racine &amp; Roosevelt</item>
+        <item>Racine &amp; 13th Street</item>
+        <item>Racine &amp; 14th Street</item>
+    </string-array>
+
+    <string-array name="Sixty_West_IDs">
+        <item>Select Stop</item>
+        <item>6364</item>
+        <item>6365</item>
+        <item>206</item>
+        <item>207</item>
+        <item>208</item>
+        <item>6366</item>
+        <item>15401</item>
+        <item>15402</item>
+        <item>15292</item>
+        <item>15403</item>
+        <item>6370</item>
+        <item>6371</item>
+    </string-array>
+
+    <string-array name="Sixty_East_Stops">
+        <item>Select Stop</item>
+        <item>Canal &amp; Harrison</item>
+        <item>Harrison &amp; Jefferson</item>
+        <item>Harrison &amp; Halsted</item>
+        <item>900 W Harrison</item>
+        <item>Harrison &amp; Morgan</item>
+        <item>Racine &amp; Harrison</item>
+        <item>Racine &amp; Lexington</item>
+        <item>Racine &amp; Taylor</item>
+    </string-array>
+
+    <string-array name="Sixty_East_IDs">
+        <item>Select Stop</item>
+        <item>14210</item>
+        <item>17995</item>
+        <item>6347</item>
+        <item>201</item>
+        <item>200</item>
+        <item>6346</item>
+        <item>15993</item>
+        <item>6344</item>
+    </string-array>
+
+    <string-array name="Twelve_West_Stops">
+        <item>Select Stop</item>
+        <item>327 W Roosevelt</item>
+        <item>Roosevelt &amp; Canal</item>
+        <item>Roosevelt &amp; Jefferson</item>
+        <item>Roosevelt &amp; Halsted</item>
+        <item>900 W Roosevelt</item>
+        <item>Roosevelt &amp; Morgan</item>
+        <item>Roosevelt &amp; Blue Island</item>
+        <item>Roosevelt &amp; May</item>
+    </string-array>
+
+    <string-array name="Twelve_West_IDs">
+        <item>Select Stop</item>
+        <item>326</item>
+        <item>327</item>
+        <item>18174</item>
+        <item>17396</item>
+        <item>332</item>
+        <item>333</item>
+        <item>334</item>
+        <item>335</item>
+    </string-array>
+
+    <string-array name="Twelve_East_Stops">
+        <item>Select Stop</item>
+        <item>327 W Roosevelt</item>
+        <item>Roosevelt &amp; Canal</item>
+        <item>Roosevelt &amp; Jefferson</item>
+        <item>Roosevelt &amp; Halsted</item>
+        <item>900 W Roosevelt</item>
+        <item>Roosevelt &amp; Morgan</item>
+        <item>Roosevelt &amp; Blue Island</item>
+        <item>Roosevelt &amp; May</item>
+    </string-array>
+
+    <string-array name="Twelve_East_IDs">
+        <item>Select Stop</item>
+        <item>313</item>
+        <item>312</item>
+        <item>310</item>
+        <item>14459</item>
+        <item>307</item>
+        <item>306</item>
+        <item>305</item>
+        <item>17003</item>
+    </string-array>
+
+    <string-array name="OneFiveSeven_West_Stops">
+        <item>Select Stop</item>
+        <item>Clinton &amp; Taylor</item>
+        <item>Taylor &amp; Jefferson</item>
+        <item>Taylor &amp; Halsted</item>
+        <item>900 W Taylor</item>
+        <item>Taylor &amp; Morgan</item>
+        <item>Taylor &amp; Aberdeen</item>
+        <item>Taylor &amp; Racine</item>
+        <item>Taylor &amp; Throop</item>
+        <item>Taylor &amp; Loomis</item>
+        <item>Taylor &amp; Laflin</item>
+    </string-array>
+
+    <string-array name="OneFiveSeven_West_IDs">
+        <item>Select Stop</item>
+        <item>6623</item>
+        <item>17275</item>
+        <item>17277</item>
+        <item>6627</item>
+        <item>6628</item>
+        <item>6629</item>
+        <item>15811</item>
+        <item>6631</item>
+        <item>6632</item>
+        <item>6633</item>
+    </string-array>
+
+    <string-array name="OneFiveSeven_East_Stops">
+        <item>Select Stop</item>
+        <item>Canal &amp; Taylor</item>
+        <item>Taylor &amp; Jefferson</item>
+        <item>Taylor &amp; Halsted</item>
+        <item>900 W Taylor</item>
+        <item>Taylor &amp; Morgan</item>
+        <item>Taylor &amp; Aberdeen</item>
+        <item>Taylor &amp; Racine</item>
+        <item>Taylor &amp; Throop</item>
+        <item>Taylor &amp; Loomis</item>
+        <item>Taylor &amp; Laflin</item>
+    </string-array>
+
+    <string-array name="OneFiveSeven_East_IDs">
+        <item>Select Stop</item>
+        <item>6705</item>
+        <item>6703</item>
+        <item>6701</item>
+        <item>6700</item>
+        <item>6699</item>
+        <item>6698</item>
+        <item>6697</item>
+        <item>6696</item>
+        <item>6695</item>
+        <item>6694</item>
+    </string-array>
+</resources>

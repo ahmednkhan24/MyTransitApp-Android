@@ -4,31 +4,4 @@
     <string name="Track_Text">TRACK</string>
     <string name="label_error_text">Error</string>
 
-    <string-array name="Bus_Routes_Array">
-        <item>Select Route</item>
-        <item>7 - Harrison</item>
-        <item>8 - Halsted</item>
-        <item>12 - Roosevelt</item>
-        <item>60 - Blue Island/26th</item>
-        <item>157 - Streeterville/Taylor</item>
-    </string-array>
-    
-    <string-array name="Empty_Direction">
-        <item>Select Direction</item>
-    </string-array>
-    
-    <string-array name="NorthSouth_Direction">
-        <item>North</item>
-        <item>South</item>
-    </string-array>
-
-    <string-array name="EastWest_Direction">
-        <item>East</item>
-        <item>West</item>
-    </string-array>
-
-    <string-array name="Empty_Stop">
-        <item>Select Stop</item>
-    </string-array>
-
 </resources>

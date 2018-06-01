@@ -1,29 +1,29 @@
 package com.example.faraz.mytransitapp_android;
 
-import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    // the track button
+    private Button trackButton;
 
+    // spinners
     private Spinner busRouteSpinner;
     private Spinner busDirectionSpinner;
     private Spinner busStopSpinner;
 
-    private ArrayAdapter<CharSequence> busRouteAdapter;
-    private ArrayAdapter<CharSequence> busDirectionAdapter;
-    private ArrayAdapter<CharSequence> busStopAdapter;
-
+    // strings to hold the data
     private String selectedRoute;
     private String selectedDirection;
     private String selectedStop;
@@ -33,22 +33,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // find all 3 spinners and attach adapters to them
-        busRouteSpinner = findViewById(R.id.Bus_Route_Spinner);
-        setRouteAdapter(R.array.Bus_Routes_Array);
+        // cta data objects
+        final KeyValue EightNorth = new KeyValue(createList(R.array.Eight_North_Stops), createList(R.array.Eight_North_IDs));
+        final KeyValue EightSouth = new KeyValue(createList(R.array.Eight_South_Stops), createList(R.array.Eight_South_IDs));
+        final KeyValue SevenWest = new KeyValue(createList(R.array.Seven_West_Stops), createList(R.array.Seven_West_IDs));
+        final KeyValue SevenEast = new KeyValue(createList(R.array.Seven_East_Stops), createList(R.array.Seven_East_IDs));
+        final KeyValue TwelveWest = new KeyValue(createList(R.array.Twelve_West_Stops), createList(R.array.Twelve_West_IDs));
+        final KeyValue TwelveEast = new KeyValue(createList(R.array.Twelve_East_Stops), createList(R.array.Twelve_East_IDs));
+        final KeyValue SixtyWest = new KeyValue(createList(R.array.Sixty_West_Stops), createList(R.array.Sixty_West_IDs));
+        final KeyValue SixtyEast = new KeyValue(createList(R.array.Sixty_East_Stops), createList(R.array.Sixty_East_IDs));
+        final KeyValue OneFiveSevenWest = new KeyValue(createList(R.array.OneFiveSeven_West_Stops), createList(R.array.OneFiveSeven_West_IDs));
+        final KeyValue OneFiveSevenEast = new KeyValue(createList(R.array.OneFiveSeven_East_Stops), createList(R.array.OneFiveSeven_East_IDs));
 
-        busDirectionSpinner = findViewById(R.id.Bus_Direction_Spinner);
-        setDirectionAdapter(R.array.Empty_Direction);
-
+        // Bus Stop Spinner
         busStopSpinner = findViewById(R.id.Bus_Stop_Spinner);
-        setStopAdapter(R.array.Empty_Stop);
-
-        // Set an OnItemSelected listener on the bus route spinner
-        busRouteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final ArrayList<String> busStopList = createList(R.array.Empty_Stop);
+        final ArrayAdapter<String> busStopAdapter = createAdapter(busStopList);
+        busStopSpinner.setAdapter(busStopAdapter);
+        busStopSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedRoute = parent.getItemAtPosition(position).toString();
-
 
             }
 
@@ -57,31 +61,91 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        // Bus Direction Spinner
+        busDirectionSpinner = findViewById(R.id.Bus_Direction_Spinner);
+        final ArrayList<String> busDirectionList = createList(R.array.Empty_Direction);
+        final ArrayAdapter<String> busDirectionAdapter = createAdapter(busDirectionList);
+        busDirectionSpinner.setAdapter(busDirectionAdapter);
+        busDirectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // Bus Route Spinner
+        busRouteSpinner = findViewById(R.id.Bus_Route_Spinner);
+        final ArrayList<String> busRouteList = createList(R.array.Bus_Routes_Array);
+        final ArrayAdapter<String> busRouteAdapter = createAdapter(busRouteList);
+        busRouteSpinner.setAdapter(busRouteAdapter);
+        busRouteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedRoute = parent.getItemAtPosition(position).toString();
+//                busDirectionAdapter.clear();
+//                busDirectionAdapter.addAll(createList(R.array.NorthSouth_Direction));
+//                busDirectionAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // find the track button and add a click listener to it
+        trackButton = findViewById(R.id.Track_Bus_Button);
+        trackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "You clicked the button", Toast.LENGTH_SHORT).show();
+                //EightNorth.Print();
+            }
+        });
     }
 
-    // sets an adapter with the given resource ID to the route spinner
-    private void setRouteAdapter(int resID) {
-        // Create an ArrayAdapter using the String array and a spinner layout
-        busRouteAdapter = ArrayAdapter.createFromResource(this, resID, R.layout.spinner_item);
+    // given the resource ID, converts a XML string array to a Java ArrayList and returns it
+    private ArrayList<String> createList(int resID) {
+        return new ArrayList<>(Arrays.asList(getResources().getStringArray(resID)));
+    }
+
+    // given an ArrayList, creates an adapter and fills it with the contents from the given list
+    // disables the first item and colors it gray
+    private ArrayAdapter<String> createAdapter(ArrayList<String> list) {
+        final ArrayAdapter<String> adap = new ArrayAdapter<String>(this, R.layout.spinner_item, list) {
+            @Override
+            public boolean isEnabled(int position){
+                // Disable the first item from Spinner
+                if(position == 0)
+                    return false;
+                else
+                    return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+
+                // Set the disable item text color
+                if(position == 0)
+                    tv.setTextColor(Color.GRAY);
+                else
+                    tv.setTextColor(Color.BLACK);
+
+                return view;
+            }
+        };
 
         // Specify the layout to use when the list of choices appears
-        busRouteAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        adap.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
-        // Apply the adapter to the spinner
-        busRouteSpinner.setAdapter(busRouteAdapter);
-    }
-
-    // sets an adapter with the given resource ID to the direction spinner
-    private void setDirectionAdapter(int resID) {
-        busDirectionAdapter = ArrayAdapter.createFromResource(this, resID, R.layout.spinner_item);
-        busDirectionAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        busDirectionSpinner.setAdapter(busDirectionAdapter);
-    }
-
-    // sets an adapter with the given resource ID to the stops spinner
-    private void setStopAdapter(int resID) {
-        busStopAdapter = ArrayAdapter.createFromResource(this, resID, R.layout.spinner_item);
-        busStopAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        busStopSpinner.setAdapter(busStopAdapter);
+        return adap;
     }
 }
