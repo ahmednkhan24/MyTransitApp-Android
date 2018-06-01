@@ -19,14 +19,14 @@
 
     <string-array name="NorthSouth_Direction">
         <item>Select Direction</item>
-        <item>North</item>
-        <item>South</item>
+        <item>Northbound</item>
+        <item>Southbound</item>
     </string-array>
 
     <string-array name="EastWest_Direction">
         <item>Select Direction</item>
-        <item>East</item>
-        <item>West</item>
+        <item>Eastbound</item>
+        <item>Westbound</item>
     </string-array>
 
 
@@ -97,7 +97,7 @@
         <item>Harrison &amp; Halsted</item>
         <item>900 W Harrison</item>
         <item>Harrison &amp; Morgan</item>
-        <item>Harrison &amp; Racine (SSB)</item>
+        <item>Harrison &amp; Racine</item>
         <item>Harrison &amp; Throop</item>
         <item>Harrison &amp; Loomis</item>
     </string-array>

@@ -3,6 +3,7 @@ package com.example.faraz.mytransitapp_android;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private String selectedRoute;
     private String selectedDirection;
     private String selectedStop;
+    private String ID;
+
+    private final CTA cta = new CTA();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
         busStopSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                selectedStop = parent.getItemAtPosition(position).toString();
+                if (selectedRoute.equals("Select Route") ||
+                    selectedDirection.equals("Select Direction") ||
+                    selectedStop.equals("Select Stop")) {
+                    return;
+                }
+                Log.d("Transit", selectedRoute + ", " + selectedDirection + ", " + selectedStop);
             }
 
             @Override
@@ -70,7 +80,68 @@ public class MainActivity extends AppCompatActivity {
         busDirectionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                selectedDirection = parent.getItemAtPosition(position).toString();
+                busStopAdapter.clear();
+                busStopAdapter.addAll(createList(R.array.Empty_Stop));
+                busStopAdapter.notifyDataSetChanged();
+                String value = cta.checkBus(selectedRoute, selectedDirection);
+                switch (value) {
+                    case "":
+                        break;
+                    case "008N":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Eight_North_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "008S":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Eight_South_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "007E":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Seven_East_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "007W":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Seven_West_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "012E":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Twelve_East_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "012W":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Twelve_West_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "060E":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Sixty_East_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "060W":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.Sixty_West_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "157E":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.OneFiveSeven_East_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    case "157W":
+                        busStopAdapter.clear();
+                        busStopAdapter.addAll(createList(R.array.OneFiveSeven_West_Stops));
+                        busStopAdapter.notifyDataSetChanged();
+                        break;
+                    default:
+                        Log.d("Transit","Invalid Direction: " + selectedDirection);
+                        break;
+                }
             }
 
             @Override
@@ -88,9 +159,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedRoute = parent.getItemAtPosition(position).toString();
-//                busDirectionAdapter.clear();
-//                busDirectionAdapter.addAll(createList(R.array.NorthSouth_Direction));
-//                busDirectionAdapter.notifyDataSetChanged();
+                busStopAdapter.clear();
+                busStopAdapter.addAll(createList(R.array.Empty_Stop));
+                busStopAdapter.notifyDataSetChanged();
+                if (selectedRoute.equals("Select Route")) {
+                }
+                else if (selectedRoute.equals("8 - Halsted")) {
+                    busDirectionAdapter.clear();
+                    busDirectionAdapter.addAll(createList(R.array.NorthSouth_Direction));
+                    busDirectionAdapter.notifyDataSetChanged();
+                }
+                else {
+                    busDirectionAdapter.clear();
+                    busDirectionAdapter.addAll(createList(R.array.EastWest_Direction));
+                    busDirectionAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
