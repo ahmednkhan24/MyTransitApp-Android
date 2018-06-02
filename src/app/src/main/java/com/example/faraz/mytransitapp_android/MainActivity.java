@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     // the track button
@@ -30,24 +32,26 @@ public class MainActivity extends AppCompatActivity {
     private String selectedStop;
     private String ID;
 
+    // cta data objects
     private final CTA cta = new CTA();
+    private Map<String, KeyValue> ctaDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // cta data objects
-        final KeyValue EightNorth = new KeyValue(createList(R.array.Eight_North_Stops), createList(R.array.Eight_North_IDs));
-        final KeyValue EightSouth = new KeyValue(createList(R.array.Eight_South_Stops), createList(R.array.Eight_South_IDs));
-        final KeyValue SevenWest = new KeyValue(createList(R.array.Seven_West_Stops), createList(R.array.Seven_West_IDs));
-        final KeyValue SevenEast = new KeyValue(createList(R.array.Seven_East_Stops), createList(R.array.Seven_East_IDs));
-        final KeyValue TwelveWest = new KeyValue(createList(R.array.Twelve_West_Stops), createList(R.array.Twelve_West_IDs));
-        final KeyValue TwelveEast = new KeyValue(createList(R.array.Twelve_East_Stops), createList(R.array.Twelve_East_IDs));
-        final KeyValue SixtyWest = new KeyValue(createList(R.array.Sixty_West_Stops), createList(R.array.Sixty_West_IDs));
-        final KeyValue SixtyEast = new KeyValue(createList(R.array.Sixty_East_Stops), createList(R.array.Sixty_East_IDs));
-        final KeyValue OneFiveSevenWest = new KeyValue(createList(R.array.OneFiveSeven_West_Stops), createList(R.array.OneFiveSeven_West_IDs));
-        final KeyValue OneFiveSevenEast = new KeyValue(createList(R.array.OneFiveSeven_East_Stops), createList(R.array.OneFiveSeven_East_IDs));
+        
+        ctaDB = new HashMap<>();
+        ctaDB.put("008N", new KeyValue(createList(R.array.Eight_North_Stops), createList(R.array.Eight_North_IDs)));
+        ctaDB.put("008S", new KeyValue(createList(R.array.Eight_South_Stops), createList(R.array.Eight_South_IDs)));
+        ctaDB.put("007W", new KeyValue(createList(R.array.Seven_West_Stops), createList(R.array.Seven_West_IDs)));
+        ctaDB.put("007E", new KeyValue(createList(R.array.Seven_East_Stops), createList(R.array.Seven_East_IDs)));
+        ctaDB.put("012W", new KeyValue(createList(R.array.Twelve_West_Stops), createList(R.array.Twelve_West_IDs)));
+        ctaDB.put("012E", new KeyValue(createList(R.array.Twelve_East_Stops), createList(R.array.Twelve_East_IDs)));
+        ctaDB.put("060W", new KeyValue(createList(R.array.Sixty_West_Stops), createList(R.array.Sixty_West_IDs)));
+        ctaDB.put("060E", new KeyValue(createList(R.array.Sixty_East_Stops), createList(R.array.Sixty_East_IDs)));
+        ctaDB.put("157W", new KeyValue(createList(R.array.OneFiveSeven_West_Stops), createList(R.array.OneFiveSeven_West_IDs)));
+        ctaDB.put("157E", new KeyValue(createList(R.array.OneFiveSeven_East_Stops), createList(R.array.OneFiveSeven_East_IDs)));
 
         // Bus Stop Spinner
         busStopSpinner = findViewById(R.id.Bus_Stop_Spinner);
@@ -81,67 +85,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedDirection = parent.getItemAtPosition(position).toString();
+
                 busStopAdapter.clear();
                 busStopAdapter.addAll(createList(R.array.Empty_Stop));
                 busStopAdapter.notifyDataSetChanged();
-                String value = cta.checkBus(selectedRoute, selectedDirection);
-                switch (value) {
-                    case "":
-                        break;
-                    case "008N":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Eight_North_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "008S":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Eight_South_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "007E":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Seven_East_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "007W":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Seven_West_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "012E":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Twelve_East_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "012W":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Twelve_West_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "060E":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Sixty_East_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "060W":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.Sixty_West_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "157E":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.OneFiveSeven_East_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    case "157W":
-                        busStopAdapter.clear();
-                        busStopAdapter.addAll(createList(R.array.OneFiveSeven_West_Stops));
-                        busStopAdapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        Log.d("Transit","Invalid Direction: " + selectedDirection);
-                        break;
-                }
+
+                String key = cta.checkBus(selectedRoute, selectedDirection);
+                if (key.equals(""))
+                    return;
+
+                KeyValue value = ctaDB.get(key);
+                if (value == null)
+                    return;
+
+                busStopAdapter.clear();
+                busStopAdapter.addAll(value.getNames());
+                busStopAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -159,10 +118,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedRoute = parent.getItemAtPosition(position).toString();
+
                 busStopAdapter.clear();
                 busStopAdapter.addAll(createList(R.array.Empty_Stop));
                 busStopAdapter.notifyDataSetChanged();
+
                 if (selectedRoute.equals("Select Route")) {
+                    return;
                 }
                 else if (selectedRoute.equals("8 - Halsted")) {
                     busDirectionAdapter.clear();

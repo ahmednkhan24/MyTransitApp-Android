@@ -4,9 +4,9 @@ import android.util.Log;
 
 public class CTA {
     public String checkBus(String selectedRoute, String selectedDirection) {
-        if (selectedRoute == null && selectedRoute.isEmpty() || selectedRoute.equals("Select Route"))
+        if (selectedRoute == null || selectedRoute.equals("Select Route"))
             return "";
-        else if (selectedDirection == null && selectedDirection.isEmpty() || selectedDirection.equals("Select Direction"))
+        else if (selectedDirection == null || selectedDirection.equals("Select Direction"))
             return "";
 
         switch (selectedRoute) {
