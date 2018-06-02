@@ -1,5 +1,6 @@
 package com.example.faraz.mytransitapp_android;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -20,6 +23,9 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     // the track button
     private Button trackButton;
+
+    // the switch to train switch
+    private Switch busToTrainSwitch;
 
     // spinners
     private Spinner busRouteSpinner;
@@ -40,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         ctaDB = new HashMap<>();
         ctaDB.put("008N", new KeyValue(createList(R.array.Eight_North_Stops), createList(R.array.Eight_North_IDs)));
         ctaDB.put("008S", new KeyValue(createList(R.array.Eight_South_Stops), createList(R.array.Eight_South_IDs)));
@@ -150,9 +156,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "You clicked the button", Toast.LENGTH_SHORT).show();
-                //EightNorth.Print();
+                Intent myIntent = new Intent(MainActivity.this, DisplayResults.class);
+                finish();
+                startActivity(myIntent);
             }
         });
+
+        // find the switch and add a checked listener to it
+        busToTrainSwitch = findViewById(R.id.Bus_Train_Switch);
+        busToTrainSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Intent myIntent = new Intent(MainActivity.this, trainActivity.class);
+                    finish();
+                    startActivity(myIntent);
+                }
+            }
+        });
+
     }
 
     // given the resource ID, converts a XML string array to a Java ArrayList and returns it
