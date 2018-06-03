@@ -3,5 +3,7 @@
     <string name="Bus_Train_Switch">Train</string>
     <string name="Track_Text">TRACK</string>
     <string name="label_error_text">Error</string>
+    <string name="Forest_Park_Text">To Forest Park</string>
+    <string name="OHare_Text">To OHare</string>
 
 </resources>

@@ -21,10 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    // the track button
     private Button trackButton;
-
-    // the switch to train switch
     private Switch busToTrainSwitch;
 
     // spinners
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private String selectedDirection;
     private String selectedStop;
     private String ID;
+    private String routeNumber;
 
     // cta data objects
     private final CTA cta = new CTA();
@@ -46,6 +44,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // when the app is fired up from the home screen, savedInstanceState will be null
+        // When the app has already been running and the screen was rotated, the bundle exists
+        if (savedInstanceState != null) {
+            selectedRoute = savedInstanceState.getString("route");
+            selectedDirection = savedInstanceState.getString("dir");
+            selectedStop = savedInstanceState.getString("stop");
+            ID = savedInstanceState.getString("stpid");
+            routeNumber = savedInstanceState.getString("rtNum");
+        }
 
         ctaDB = new HashMap<>();
         ctaDB.put("008N", new KeyValue(createList(R.array.Eight_North_Stops), createList(R.array.Eight_North_IDs)));
@@ -73,13 +81,20 @@ public class MainActivity extends AppCompatActivity {
                     selectedStop.equals("Select Stop")) {
                     return;
                 }
-                Log.d("Transit", selectedRoute + ", " + selectedDirection + ", " + selectedStop);
+
+                String key = cta.checkBus(selectedRoute, selectedDirection);
+                if (key == null)
+                    return;
+
+                KeyValue value = ctaDB.get(key);
+                if (value == null)
+                    return;
+
+                ID = value.find(selectedStop);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         // Bus Direction Spinner
@@ -96,8 +111,11 @@ public class MainActivity extends AppCompatActivity {
                 busStopAdapter.addAll(createList(R.array.Empty_Stop));
                 busStopAdapter.notifyDataSetChanged();
 
+                selectedStop = null;
+                ID = null;
+
                 String key = cta.checkBus(selectedRoute, selectedDirection);
-                if (key.equals(""))
+                if (key == null)
                     return;
 
                 KeyValue value = ctaDB.get(key);
@@ -110,9 +128,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         // Bus Route Spinner
@@ -129,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
                 busStopAdapter.addAll(createList(R.array.Empty_Stop));
                 busStopAdapter.notifyDataSetChanged();
 
+                selectedDirection = null;
+                selectedStop = null;
+                ID = null;
+
                 if (selectedRoute.equals("Select Route")) {
                     return;
                 }
@@ -142,12 +162,12 @@ public class MainActivity extends AppCompatActivity {
                     busDirectionAdapter.addAll(createList(R.array.EastWest_Direction));
                     busDirectionAdapter.notifyDataSetChanged();
                 }
+
+                routeNumber = cta.getRouteNumber(selectedRoute);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         // find the track button and add a click listener to it
@@ -155,8 +175,17 @@ public class MainActivity extends AppCompatActivity {
         trackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "You clicked the button", Toast.LENGTH_SHORT).show();
+                if (ID == null || selectedRoute.equals("Select Route") ||
+                                    selectedDirection.equals("Select Direction") ||
+                                    selectedStop.equals("Select Stop")) {
+                    Toast.makeText(MainActivity.this, "Oops! You missed something", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(MainActivity.this, "Tracking...", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(MainActivity.this, DisplayResults.class);
+                myIntent.putExtra("stpid", ID);
+                myIntent.putExtra("rt", routeNumber);
                 finish();
                 startActivity(myIntent);
             }
@@ -174,7 +203,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    // app receives callback to this function when the Android OS detects a screen rotation
+    // function stores the state of our app when the main activity is restarted due to screen rotation
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("route", selectedRoute);
+        outState.putString("dir", selectedDirection);
+        outState.putString("stop", selectedStop);
+        outState.putString("stpid", ID);
+        outState.putString("rtNum", routeNumber);
     }
 
     // given the resource ID, converts a XML string array to a Java ArrayList and returns it

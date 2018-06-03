@@ -10,8 +10,6 @@
         <item>157 - Streeterville/Taylor</item>
     </string-array>
 
-
-
     <!--Bus Direction-->
     <string-array name="Empty_Direction">
         <item>Select Direction</item>
@@ -28,8 +26,6 @@
         <item>Eastbound</item>
         <item>Westbound</item>
     </string-array>
-
-
 
     <!--Bus Stops-->
     <string-array name="Empty_Stop">
@@ -296,5 +292,45 @@
         <item>6696</item>
         <item>6695</item>
         <item>6694</item>
+    </string-array>
+
+    <!--Train Stops-->
+    <string-array name="Blueline_Stops">
+        <item>Select Stop</item>
+        <item>Clarke/Lake</item>
+        <item>Washington</item>
+        <item>Monroe</item>
+        <item>Jackson</item>
+        <item>LaSalle</item>
+        <item>Clinton</item>
+        <item>UIC-Halsted</item>
+        <item>Racine</item>
+        <item>Illinois Medical District</item>
+    </string-array>
+
+    <string-array name="FP_IDs">
+        <item>Select Stop</item>
+        <item>30374</item>
+        <item>30073</item>
+        <item>30154</item>
+        <item>30015</item>
+        <item>30262</item>
+        <item>30085</item>
+        <item>30069</item>
+        <item>30093</item>
+        <item>30158</item>
+    </string-array>
+
+    <string-array name="OH_IDs">
+        <item>Select Stop</item>
+        <item>30375</item>
+        <item>30072</item>
+        <item>30153</item>
+        <item>30014</item>
+        <item>30261</item>
+        <item>30084</item>
+        <item>30068</item>
+        <item>30092</item>
+        <item>30157</item>
     </string-array>
 </resources>

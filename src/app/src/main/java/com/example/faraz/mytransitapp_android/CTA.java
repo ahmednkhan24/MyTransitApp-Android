@@ -5,9 +5,9 @@ import android.util.Log;
 public class CTA {
     public String checkBus(String selectedRoute, String selectedDirection) {
         if (selectedRoute == null || selectedRoute.equals("Select Route"))
-            return "";
+            return null;
         else if (selectedDirection == null || selectedDirection.equals("Select Direction"))
-            return "";
+            return null;
 
         switch (selectedRoute) {
             case "8 - Halsted":
@@ -36,7 +36,24 @@ public class CTA {
                 else
                     return "157W";
             default:
-                return "";
+                return null;
+        }
+    }
+
+    public String getRouteNumber(String selectedRoute) {
+        switch (selectedRoute) {
+            case "7 - Harrison":
+                return "7";
+            case "8 - Halsted":
+                return "8";
+            case "12 - Roosevelt":
+                return "12";
+            case "60 - Blue Island/26th":
+                return "60";
+            case "157 - Streeterville/Taylor":
+                return "157";
+            default:
+                return null;
         }
     }
 }
