@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -18,22 +19,31 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class trainActivity extends AppCompatActivity {
-    // the track button
     private Button trackButton;
-
-    // the switch to bus switch
     private Switch trainToBusSwitch;
-
     private Spinner trainStopSpinner;
+    private RadioGroup radioButtonGroup;
 
     private String selectedStop;
+    private String ID;
+
+    // cta data objects
+    private CTA cta;
+    private Map<String, KeyValue> ctaDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train_activity);
+
+        cta = new CTA();
+        ctaDB = new HashMap<>();
+        ctaDB.put("FP", new KeyValue(createList(R.array.Blueline_Stops), createList(R.array.FP_IDs)));
+        ctaDB.put("OH", new KeyValue(createList(R.array.Blueline_Stops), createList(R.array.OH_IDs)));
 
         // Train Stop Spinner
         trainStopSpinner = findViewById(R.id.Train_Route_Spinner);
@@ -46,12 +56,34 @@ public class trainActivity extends AppCompatActivity {
                 selectedStop = parent.getItemAtPosition(position).toString();
                 if (selectedStop.equals("Select Stop"))
                     return;
-                Log.d("Transit", selectedStop);
+
+                int checkedRadioBtnID = radioButtonGroup.getCheckedRadioButtonId();
+                if (checkedRadioBtnID == R.id.FP_RadioButton) {
+                    ID = ctaDB.get("FP").find(selectedStop);
+                }
+                else {
+                    ID = ctaDB.get("OH").find(selectedStop);
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
+        radioButtonGroup = findViewById(R.id.Train_Direction_RadioGroup);
+        radioButtonGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (selectedStop == null || selectedStop.equals("Select Stop")) {
+                    return;
+                }
+
+                if (checkedId == R.id.FP_RadioButton) {
+                    ID = ctaDB.get("FP").find(selectedStop);
+                }
+                else {
+                    ID = ctaDB.get("OH").find(selectedStop);
+                }
             }
         });
 
@@ -60,8 +92,15 @@ public class trainActivity extends AppCompatActivity {
         trackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(trainActivity.this, "You clicked the button", Toast.LENGTH_SHORT).show();
+                if (ID == null) {
+                    Toast.makeText(trainActivity.this, "Oops! You missed something", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Toast.makeText(trainActivity.this, "Tracking...", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(trainActivity.this, DisplayResults.class);
+                myIntent.putExtra("stpid", ID);
+                myIntent.putExtra("rt", "Blue");
                 finish();
                 startActivity(myIntent);
             }

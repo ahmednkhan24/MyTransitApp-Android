@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private String routeNumber;
 
     // cta data objects
-    private final CTA cta = new CTA();
+    private CTA cta;
     private Map<String, KeyValue> ctaDB;
 
     @Override
@@ -49,12 +49,13 @@ public class MainActivity extends AppCompatActivity {
         // When the app has already been running and the screen was rotated, the bundle exists
         if (savedInstanceState != null) {
             selectedRoute = savedInstanceState.getString("route");
-            selectedDirection = savedInstanceState.getString("dir");
-            selectedStop = savedInstanceState.getString("stop");
+            selectedDirection = "Select Direction";
+            selectedStop = "Select Stop";
             ID = savedInstanceState.getString("stpid");
             routeNumber = savedInstanceState.getString("rtNum");
         }
 
+        cta = new CTA();
         ctaDB = new HashMap<>();
         ctaDB.put("008N", new KeyValue(createList(R.array.Eight_North_Stops), createList(R.array.Eight_North_IDs)));
         ctaDB.put("008S", new KeyValue(createList(R.array.Eight_South_Stops), createList(R.array.Eight_South_IDs)));
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedStop = parent.getItemAtPosition(position).toString();
+
+                if (selectedRoute == null || selectedDirection == null || selectedStop == null)
+                    return;
+
                 if (selectedRoute.equals("Select Route") ||
                     selectedDirection.equals("Select Direction") ||
                     selectedStop.equals("Select Stop")) {
@@ -212,8 +217,6 @@ public class MainActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         outState.putString("route", selectedRoute);
-        outState.putString("dir", selectedDirection);
-        outState.putString("stop", selectedStop);
         outState.putString("stpid", ID);
         outState.putString("rtNum", routeNumber);
     }
