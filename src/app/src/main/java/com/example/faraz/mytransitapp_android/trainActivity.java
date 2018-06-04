@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -30,9 +31,9 @@ public class trainActivity extends AppCompatActivity {
 
     private String selectedStop;
     private String ID;
+    private int checkedRadioBtnID;
 
     // cta data objects
-    private CTA cta;
     private Map<String, KeyValue> ctaDB;
 
     @Override
@@ -40,7 +41,26 @@ public class trainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.train_activity);
 
-        cta = new CTA();
+        // when the app is fired up from the home screen, savedInstanceState will be null
+        // When the app has already been running and the screen was rotated, the bundle exists
+        if (savedInstanceState != null) {
+            selectedStop = savedInstanceState.getString("stop");
+            checkedRadioBtnID = savedInstanceState.getInt("dir");
+            ID = savedInstanceState.getString("stpid");
+
+            RadioButton fp = findViewById(R.id.FP_RadioButton);
+            RadioButton oh = findViewById(R.id.OH_RadioButton);
+
+            if (checkedRadioBtnID == R.id.FP_RadioButton) {
+                fp.setChecked(true);
+                oh.setChecked(false);
+            }
+            else {
+                oh.setChecked(true);
+                fp.setChecked(false);
+            }
+        }
+
         ctaDB = new HashMap<>();
         ctaDB.put("FP", new KeyValue(createList(R.array.Blueline_Stops), createList(R.array.FP_IDs)));
         ctaDB.put("OH", new KeyValue(createList(R.array.Blueline_Stops), createList(R.array.OH_IDs)));
@@ -57,7 +77,7 @@ public class trainActivity extends AppCompatActivity {
                 if (selectedStop.equals("Select Stop"))
                     return;
 
-                int checkedRadioBtnID = radioButtonGroup.getCheckedRadioButtonId();
+                checkedRadioBtnID = radioButtonGroup.getCheckedRadioButtonId();
                 if (checkedRadioBtnID == R.id.FP_RadioButton) {
                     ID = ctaDB.get("FP").find(selectedStop);
                 }
@@ -77,6 +97,8 @@ public class trainActivity extends AppCompatActivity {
                 if (selectedStop == null || selectedStop.equals("Select Stop")) {
                     return;
                 }
+
+                checkedRadioBtnID = checkedId;
 
                 if (checkedId == R.id.FP_RadioButton) {
                     ID = ctaDB.get("FP").find(selectedStop);
@@ -118,6 +140,17 @@ public class trainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // app receives callback to this function when the Android OS detects a screen rotation
+    // function stores the state of our app when the main activity is restarted due to screen rotation
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("stop", selectedStop);
+        outState.putInt("dir", checkedRadioBtnID);
+        outState.putString("stpid", ID);
     }
 
     // given the resource ID, converts a XML string array to a Java ArrayList and returns it
