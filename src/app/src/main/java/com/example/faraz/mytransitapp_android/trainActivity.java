@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,7 +22,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class trainActivity extends AppCompatActivity {
+public class TrainActivity extends AppCompatActivity {
     private Button trackButton;
     private Switch trainToBusSwitch;
     private Spinner trainStopSpinner;
@@ -32,6 +31,7 @@ public class trainActivity extends AppCompatActivity {
     private String selectedStop;
     private String ID;
     private int checkedRadioBtnID;
+    private String direction;
 
     // cta data objects
     private Map<String, KeyValue> ctaDB;
@@ -52,10 +52,12 @@ public class trainActivity extends AppCompatActivity {
             RadioButton oh = findViewById(R.id.OH_RadioButton);
 
             if (checkedRadioBtnID == R.id.FP_RadioButton) {
+                direction = "FP";
                 fp.setChecked(true);
                 oh.setChecked(false);
             }
             else {
+                direction = "OH";
                 oh.setChecked(true);
                 fp.setChecked(false);
             }
@@ -79,9 +81,11 @@ public class trainActivity extends AppCompatActivity {
 
                 checkedRadioBtnID = radioButtonGroup.getCheckedRadioButtonId();
                 if (checkedRadioBtnID == R.id.FP_RadioButton) {
+                    direction = "FP";
                     ID = ctaDB.get("FP").find(selectedStop);
                 }
                 else {
+                    direction = "OH";
                     ID = ctaDB.get("OH").find(selectedStop);
                 }
             }
@@ -115,14 +119,17 @@ public class trainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ID == null) {
-                    Toast.makeText(trainActivity.this, "Oops! You missed something", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrainActivity.this, "Oops! You missed something", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Toast.makeText(trainActivity.this, "Tracking...", Toast.LENGTH_SHORT).show();
-                Intent myIntent = new Intent(trainActivity.this, DisplayResults.class);
+                Toast.makeText(TrainActivity.this, "Tracking...", Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(TrainActivity.this, DisplayResults.class);
+                myIntent.putExtra("route", "BLUE");
+                myIntent.putExtra("direction", direction);
+                myIntent.putExtra("stop", selectedStop);
                 myIntent.putExtra("stpid", ID);
-                myIntent.putExtra("rt", "Blue");
+                myIntent.putExtra("rtNum", "BLUE");
                 finish();
                 startActivity(myIntent);
             }
@@ -134,7 +141,7 @@ public class trainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isChecked) {
-                    Intent myIntent = new Intent(trainActivity.this, MainActivity.class);
+                    Intent myIntent = new Intent(TrainActivity.this, MainActivity.class);
                     finish();
                     startActivity(myIntent);
                 }

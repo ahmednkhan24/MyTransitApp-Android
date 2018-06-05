@@ -189,8 +189,11 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "Tracking...", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(MainActivity.this, DisplayResults.class);
+                myIntent.putExtra("route", selectedRoute);
+                myIntent.putExtra("direction", selectedDirection);
+                myIntent.putExtra("stop", selectedStop);
                 myIntent.putExtra("stpid", ID);
-                myIntent.putExtra("rt", routeNumber);
+                myIntent.putExtra("rtNum", routeNumber);
                 finish();
                 startActivity(myIntent);
             }
@@ -202,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Intent myIntent = new Intent(MainActivity.this, trainActivity.class);
+                    Intent myIntent = new Intent(MainActivity.this, TrainActivity.class);
                     finish();
                     startActivity(myIntent);
                 }
