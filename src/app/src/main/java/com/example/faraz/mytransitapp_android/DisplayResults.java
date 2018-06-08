@@ -74,36 +74,41 @@ public class DisplayResults extends AppCompatActivity {
         stpid = myIntent.getStringExtra("stpid");
         routeNum = myIntent.getStringExtra("rtNum");
 
-        currentStopDisplay.setText(stop + " (" + direction + ")");
-
-        Log.d("Transit", "Route: " + route);
-        Log.d("Transit", "Direc: " + direction);
-        Log.d("Transit", "stopp: " + stop);
-        Log.d("Transit", "stpid: " + stpid);
-        Log.d("Transit", "rtnum: " + routeNum);
-
         if (routeNum.equals("BLUE")) {
             previousScreen = "TRAIN";
+            loadTrainData();
         }
         else {
             previousScreen = "BUS";
-
-//            RequestParams params = new RequestParams();
-//            params.put("key", CTA_BUS_KEY);
-//            params.put("rt", routeNum);
-//            params.put("stpid", stpid);
-//            params.put("format", "json");
-//            performAPIcall(CTA_BUS_URL, params);
+            loadBusData();
         }
     }
 
-    private void performAPIcall(String url, RequestParams params) {
+    private void loadTrainData() {
+        currentStopDisplay.setText(stop + " (" + direction + ")");
+
+    }
+
+    private void loadBusData() {
+        currentStopDisplay.setText(stop + " (" + direction + ")");
+
+        RequestParams params = new RequestParams();
+        params.put("key", CTA_BUS_KEY);
+        params.put("rt", routeNum);
+        params.put("stpid", stpid);
+        params.put("format", "json");
+
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.get(url, params, new JsonHttpResponseHandler() {
+        client.get(CTA_BUS_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("Transit", "Success! JSON: " + response.toString());
+
+                busDataModel busDataModel = new busDataModel(response);
+
+
+
             }
 
             @Override
@@ -114,10 +119,4 @@ public class DisplayResults extends AppCompatActivity {
             }
         });
     }
-
-
-
-
-
-
 }
