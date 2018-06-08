@@ -21,7 +21,10 @@ public class busDataModel {
 
             for (int i = 0; i < arr.length(); i++) {
                 String time = arr.getJSONObject(i).getString("prdctdn");
-                predictions.add(time);
+                if (time.equals("DUE"))
+                    predictions.add(time);
+                else
+                    predictions.add(time + " minutes away");
             }
         }
         catch (JSONException e) {

@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,10 +18,11 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
 public class DisplayResults extends AppCompatActivity {
-
     private final String CTA_TRAIN_URL = "TEST";
     private final String CTA_BUS_URL = "http://ctabustracker.com/bustime/api/v2/getpredictions?";
     private final String CTA_TRAIN_KEY = "TEST";
@@ -32,6 +36,7 @@ public class DisplayResults extends AppCompatActivity {
 
     private ImageButton newSearchButton;
     private String previousScreen;
+    private ListView timeListView;
 
     private TextView currentStopDisplay;
 
@@ -39,6 +44,8 @@ public class DisplayResults extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results);
+
+        timeListView = findViewById(R.id.TimeListView);
 
         currentStopDisplay = findViewById(R.id.Current_Stop_Display);
         currentStopDisplay.setText("");
@@ -74,6 +81,8 @@ public class DisplayResults extends AppCompatActivity {
         stpid = myIntent.getStringExtra("stpid");
         routeNum = myIntent.getStringExtra("rtNum");
 
+        currentStopDisplay.setText(stop + " (" + direction + ")");
+
         if (routeNum.equals("BLUE")) {
             previousScreen = "TRAIN";
             loadTrainData();
@@ -84,14 +93,16 @@ public class DisplayResults extends AppCompatActivity {
         }
     }
 
-    private void loadTrainData() {
-        currentStopDisplay.setText(stop + " (" + direction + ")");
+    private void updateUI(ArrayList<String> predictions) {
+        ListAdapter timeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, predictions);
+        timeListView.setAdapter(timeAdapter);
+    }
+
+    public void loadTrainData() {
 
     }
 
-    private void loadBusData() {
-        currentStopDisplay.setText(stop + " (" + direction + ")");
-
+    public void loadBusData() {
         RequestParams params = new RequestParams();
         params.put("key", CTA_BUS_KEY);
         params.put("rt", routeNum);
@@ -106,9 +117,8 @@ public class DisplayResults extends AppCompatActivity {
                 Log.d("Transit", "Success! JSON: " + response.toString());
 
                 busDataModel busDataModel = new busDataModel(response);
-
-
-
+                ArrayList<String> predictions = busDataModel.getPredictions();
+                updateUI(predictions);
             }
 
             @Override
