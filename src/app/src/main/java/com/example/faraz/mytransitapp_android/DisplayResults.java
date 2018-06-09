@@ -11,21 +11,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
 import cz.msebera.android.httpclient.Header;
 
 public class DisplayResults extends AppCompatActivity {
-    private final String CTA_TRAIN_URL = "TEST";
+    private final String CTA_TRAIN_URL = "http://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?";
     private final String CTA_BUS_URL = "http://ctabustracker.com/bustime/api/v2/getpredictions?";
-    private final String CTA_TRAIN_KEY = "TEST";
+    private final String CTA_TRAIN_KEY = "c10281242c88403baed503120fc7cc41";
     private final String CTA_BUS_KEY = "ARXsvPdwAMNqNgnbMuyVreNbq";
 
     private String route;
@@ -99,7 +95,40 @@ public class DisplayResults extends AppCompatActivity {
     }
 
     public void loadTrainData() {
+//        RequestParams params = new RequestParams();
+//        params.put("key", CTA_TRAIN_KEY);
+//        params.put("stpid", stpid);
+//        params.put("outputType", "JSON");
+//        Log.d("Transit", "URL: " + params.toString());
 
+        /*
+             URL: stpid=30069&outputType=JSON&key=c10281242c88403baed503120fc7cc41
+
+             get request receives an error from API when I use the requestParams object,
+             but retrieves necessary data when I hard code the URL as shown below.
+
+             I will try to figure out this bug later, but right now I want to continue
+             working on a presentable final product before I spend more time on
+             trivial matters like this
+         */
+
+        String URL = CTA_TRAIN_URL + "key=" + CTA_TRAIN_KEY + "&stpid=" + stpid + "&outputType=JSON";
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(URL, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                TrainDataModel trainDataModel = new TrainDataModel(response);
+                ArrayList<String> predictions = trainDataModel.getPredictions();
+                updateUI(predictions);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                Log.e("Transit", "Fail " + e.toString());
+                Log.d("Transit", "Status Code: " + statusCode);
+                Toast.makeText(DisplayResults.this, "Request Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void loadBusData() {
@@ -110,13 +139,10 @@ public class DisplayResults extends AppCompatActivity {
         params.put("format", "json");
 
         AsyncHttpClient client = new AsyncHttpClient();
-
         client.get(CTA_BUS_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("Transit", "Success! JSON: " + response.toString());
-
-                busDataModel busDataModel = new busDataModel(response);
+                BusDataModel busDataModel = new BusDataModel(response);
                 ArrayList<String> predictions = busDataModel.getPredictions();
                 updateUI(predictions);
             }

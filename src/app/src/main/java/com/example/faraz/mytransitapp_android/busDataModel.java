@@ -5,14 +5,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-public class busDataModel {
+public class BusDataModel {
     private JSONObject jsonObject;
     private ArrayList<String> predictions;
 
-    public busDataModel(JSONObject obj) {
+    public BusDataModel(JSONObject obj) {
         jsonObject = obj;
         predictions = new ArrayList<String>();
         fromJSON();
+    }
+
+    public ArrayList<String> getPredictions() {
+        return predictions;
     }
 
     private void fromJSON() {
@@ -30,9 +34,5 @@ public class busDataModel {
         catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public ArrayList<String> getPredictions() {
-        return predictions;
     }
 }

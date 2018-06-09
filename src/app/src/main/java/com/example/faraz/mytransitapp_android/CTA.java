@@ -1,7 +1,5 @@
 package com.example.faraz.mytransitapp_android;
 
-import android.util.Log;
-
 public class CTA {
     public String checkBus(String selectedRoute, String selectedDirection) {
         if (selectedRoute == null || selectedRoute.equals("Select Route"))
